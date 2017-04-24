@@ -1,0 +1,51 @@
+
+function Loading_popup(seconds)
+{
+    $("body").append('<div id="loading_window" class="loading_window">\
+                        <div class="loading_window_text">\
+                            <i class="fa fa-spinner fa-spin" ></i><span style="position:absolute; margin-top: 50px;margin-left: 50px;">Loading, please wait...</span>\
+                            <div id="progress_container" style="font-size:15px;text-align:center;width:10%;background-color: #a3a375;"><span id="progress_bar">0%</span></div>\
+                        </div>\
+                     </div>');
+    var window_height= $( window ).height();
+    var window_width= $( window ).width();
+    $("#loading_window").css("top",window_height*=-1);
+    $("#loading_window").animate({top:'0px'},1000);  
+    
+    $("#progress_container").animate({width:"100%"},
+    {
+        duration: seconds,
+        step:
+        function(now)
+        {            
+            $("#progress_bar").text( parseInt(now)+"%");
+        }
+    },seconds);
+    
+    if(window_width<=500)
+        $(".loading_window_text").css({"left":(window_width/7),"top":((window_height*-1)/2.2)});
+    else
+        $(".loading_window_text").css({"left":(window_width/2.2),"top":((window_height*-1)/2.2)});
+    
+    $(window).resize(function()
+    {
+        window_height= $( window ).height();
+        window_width= $( window ).width();
+        if(window_width<=500)
+            $(".loading_window_text").css({"left":(window_width/7),"top":((window_height)/2.2)});
+        else
+            $(".loading_window_text").css({"left":(window_width/2.2),"top":((window_height)/2.2)});
+    });
+    
+   var timer1=setInterval(function()
+    {
+        $("#loading_window").animate({top:'-1000px'},1000);
+        var timer2=setInterval(function()
+        {
+            $("#loading_window").remove();
+            clearInterval(timer2);
+
+        },1000);
+        clearInterval(timer1);
+    },seconds);
+}
