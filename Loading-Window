@@ -1,3 +1,4 @@
+// seconds = is the parameter that will set how mutch time the window will be showen (parameter in seconds only).
 
 function Loading_popup(seconds)
 {
